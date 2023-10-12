@@ -1,29 +1,80 @@
-// EXERCISE 1
-let dog_string = "Hello Max, my name is Dog, and I have purple eyes!"
-let dog_names = ["Max","HAS","PuRple","dog"]
-
-function findWords(string, names) {
-    for (let i = 0; i < names.length; i++) {
-        let name = names[i];
-        if (string.toLowerCase().includes(name.toLowerCase())) {
-            console.log("Matched " + name);
+// Exercise 1
+function displayFavoriteDishes(person) {
+    for (const key in person) {
+        if (Array.isArray(person[key])) {
+            console.log(key + ":");
+            for (const item of person[key]) {
+                if (typeof item === "string") {
+                    console.log("  " + item);
+                }
+            }
+        } else if (typeof person[key] === "string") {
+            console.log(key + ": " + person[key]);
+        } else if (typeof person[key] === "object") {
+            for (const innerKey in person[key][0]) {
+                console.log(key + ": " + innerKey + " - " + person[key][0][innerKey]);
+            }
         }
     }
-    console.log("No Matches");
 }
 
-findWords(dog_string, dog_names);
+let person3 = {
+    pizza: ["Deep Dish", "South Side Thin Crust"],
+    tacos: "Anything not from Taco bell",
+    burgers: "Portillos Burgers",
+    ice_cream: ["Chocolate", "Vanilla", "Oreo"],
+    shakes: [{
+        oberwise: "Chocolate",
+        dunkin: "Vanilla",
+        culvers: "All of them",
+        mcDonalds: "Sham-rock-shake",
+        cupids_candies: "Chocolate Malt"
+    }]
+};
 
-// EXERCISE 2
-function replaceEvens(arr) {
-    for (let i = 0; i < arr.length; i += 2) {
-        arr.splice(i, 1, "even index");
-    }
+displayFavoriteDishes(person3);
+
+// Exercise 2
+function Person(name, age) {
+    this.name = name;
+    this.age = age;
+    
+    this.printInfo = () => {
+        console.log(`Name: ${this.name}, Age: ${this.age}`);
+    };
+    
+    this.addAge = (years) => {
+        this.age += years;
+    };
 }
 
-let arr = ["Max", "Baseball", "Reboot", "Goku", "Trucks", "Rodger"];
-replaceEvens(arr);
+const person1 = new Person("Alice", 25);
+const person2 = new Person("Bob", 30);
 
-console.log(arr);
+person1.printInfo();
+person2.printInfo();
 
-["even index", "Baseball", "even index", "Goku", "even index", "Rodger"]
+person1.addAge(3);
+
+person1.printInfo();
+
+// Exercise 3
+function checkStringLength(string) {
+    return new Promise((resolve, reject) => {
+        if (string.length > 10) {
+            resolve("Big word");
+        } else {
+            reject("Small Number");
+        }
+    });
+}
+
+checkStringLength("Hello, World!")
+    .then(result => console.log(result))
+    .catch(error => console.log(error));
+
+checkStringLength("Hi!")
+    .then(result => console.log(result))
+    .catch(error => console.log(error));
+
+
